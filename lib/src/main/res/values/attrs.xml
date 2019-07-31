@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShadowLayout" >
+        <attr name="slWidth" format="dimension" />
+        <attr name="slStartColor" format="color" />
+        <attr name="slEndColor" format="color" />
+        <attr name="slRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ShadowRelativeLayout" >
+        <attr name="srlWidth" format="dimension" />
+        <attr name="srlStartColor" format="color" />
+        <attr name="srlEndColor" format="color" />
+        <attr name="srlRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ShadowLinearLayout" >
+        <attr name="sllWidth" format="dimension" />
+        <attr name="sllStartColor" format="color" />
+        <attr name="sllEndColor" format="color" />
+        <attr name="sllRadius" format="dimension" />
+    </declare-styleable>
+</resources>
