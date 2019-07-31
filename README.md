@@ -1,6 +1,10 @@
 # ShadowLayout
 ## 说明
 这是一个是边上带阴影的Layout。
+## 效果图
+
+<img width="270" height="480" src="https://github.com/shouzhong/ShadowLayout/blob/master/Screenshots/1.jpg"/>
+
 ## 使用
 ### 依赖
 ```
@@ -67,5 +71,3 @@ sllWidth | 阴影宽度
 sllStartColor | 阴影起始颜色
 sllEndColor | 阴影结束颜色
 sllRadius | 圆角
-## 效果图
-<img width="270" height="480" src="https://github.com/shouzhong/ShadowLayout/blob/master/Screenshots/1.jpg"/>
