@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="slWidth" format="dimension" />
+    <attr name="slStartColor" format="color" />
+    <attr name="slEndColor" format="color" />
+    <attr name="slRadius" format="dimension" />
+    <attr name="slLeftTopRadius" format="dimension"/>
+    <attr name="slLeftBottomRadius" format="dimension"/>
+    <attr name="slRightTopRadius" format="dimension"/>
+    <attr name="slRightBottomRadius" format="dimension"/>
+
     <declare-styleable name="ShadowLayout" >
-        <attr name="slWidth" format="dimension" />
-        <attr name="slStartColor" format="color" />
-        <attr name="slEndColor" format="color" />
-        <attr name="slRadius" format="dimension" />
+        <attr name="slWidth" />
+        <attr name="slStartColor" />
+        <attr name="slEndColor" />
+        <attr name="slRadius" />
+        <attr name="slLeftTopRadius" />
+        <attr name="slLeftBottomRadius" />
+        <attr name="slRightTopRadius" />
+        <attr name="slRightBottomRadius" />
     </declare-styleable>
 
     <declare-styleable name="ShadowRelativeLayout" >
-        <attr name="srlWidth" format="dimension" />
-        <attr name="srlStartColor" format="color" />
-        <attr name="srlEndColor" format="color" />
-        <attr name="srlRadius" format="dimension" />
+        <attr name="slWidth" />
+        <attr name="slStartColor" />
+        <attr name="slEndColor" />
+        <attr name="slRadius" />
+        <attr name="slLeftTopRadius" />
+        <attr name="slLeftBottomRadius" />
+        <attr name="slRightTopRadius" />
+        <attr name="slRightBottomRadius" />
     </declare-styleable>
 
     <declare-styleable name="ShadowLinearLayout" >
-        <attr name="sllWidth" format="dimension" />
-        <attr name="sllStartColor" format="color" />
-        <attr name="sllEndColor" format="color" />
-        <attr name="sllRadius" format="dimension" />
+        <attr name="slWidth" />
+        <attr name="slStartColor" />
+        <attr name="slEndColor" />
+        <attr name="slRadius" />
+        <attr name="slLeftTopRadius" />
+        <attr name="slLeftBottomRadius" />
+        <attr name="slRightTopRadius" />
+        <attr name="slRightBottomRadius" />
     </declare-styleable>
 </resources>

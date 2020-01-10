@@ -4,29 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
     <com.shouzhong.shadowlayout.ShadowLayout
         android:layout_width="300dp"
         android:layout_height="100dp"
         app:slWidth="10dp"
-        app:slRadius="40dp"
         app:slStartColor="#10000000"
-        app:slEndColor="#00000000"></com.shouzhong.shadowlayout.ShadowLayout>
+        app:slEndColor="#00000000"
+        app:slLeftBottomRadius="10dp"
+        app:slRightTopRadius="20dp"
+        app:slRightBottomRadius="30dp" />
+
+    <com.shouzhong.shadowlayout.ShadowLayout
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:slWidth="10dp"
+        app:slStartColor="#10000000"
+        app:slEndColor="#00000000"
+        app:slLeftTopRadius="20dp"
+        app:slLeftBottomRadius="60dp"
+        app:slRightTopRadius="40dp"
+        app:slRightBottomRadius="40dp" />
 
     <com.shouzhong.shadowlayout.ShadowLinearLayout
         android:layout_width="300dp"
         android:layout_height="100dp"
-        app:sllWidth="10dp"
-        app:sllRadius="10dp"
-        app:sllStartColor="#10000000"
-        app:sllEndColor="#00000000"></com.shouzhong.shadowlayout.ShadowLinearLayout>
+        app:slWidth="10dp"
+        app:slRadius="100dp"
+        app:slStartColor="#10000000"
+        app:slEndColor="#00000000" />
 
     <com.shouzhong.shadowlayout.ShadowRelativeLayout
         android:layout_width="300dp"
         android:layout_height="100dp"
-        app:srlWidth="10dp"
-        app:srlRadius="0dp"
-        app:srlStartColor="#10000000"
-        app:srlEndColor="#00000000"></com.shouzhong.shadowlayout.ShadowRelativeLayout>
+        app:slWidth="10dp"
+        app:slStartColor="#10000000"
+        app:slEndColor="#00000000" />
 </LinearLayout>

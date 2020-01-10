@@ -15,9 +15,12 @@ public class ShadowRelativeLayout extends RelativeLayout {
 
     private Paint paint;
     private int shadowWidth;
-    private int radius;
     private int startColor;
     private int endColor;
+    private int ltRadius;
+    private int lbRadius;
+    private int rtRadius;
+    private int rbRadius;
 
     public ShadowRelativeLayout(Context context) {
         this(context, null);
@@ -33,10 +36,22 @@ public class ShadowRelativeLayout extends RelativeLayout {
         if (attrs == null) return;
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ShadowRelativeLayout, defStyleAttr, 0);
         if (array == null || array.length() == 0) return;
-        shadowWidth = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_srlWidth, shadowWidth);
-        radius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_srlRadius, radius);
-        startColor = array.getColor(R.styleable.ShadowRelativeLayout_srlStartColor, startColor);
-        endColor = array.getColor(R.styleable.ShadowRelativeLayout_srlEndColor, endColor);
+        shadowWidth = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slWidth, shadowWidth);
+        ltRadius = lbRadius = rtRadius = rbRadius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slRadius, 0);
+        if (array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slLeftTopRadius, -1) != -1) {
+            ltRadius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slLeftTopRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slLeftBottomRadius, -1) != -1) {
+            lbRadius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slLeftBottomRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slRightTopRadius, -1) != -1) {
+            rtRadius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slRightTopRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slRightBottomRadius, -1) != -1) {
+            rbRadius = array.getDimensionPixelSize(R.styleable.ShadowRelativeLayout_slRightBottomRadius, -1);
+        }
+        startColor = array.getColor(R.styleable.ShadowRelativeLayout_slStartColor, startColor);
+        endColor = array.getColor(R.styleable.ShadowRelativeLayout_slEndColor, endColor);
         array.recycle();
     }
 
@@ -46,7 +61,7 @@ public class ShadowRelativeLayout extends RelativeLayout {
         if (shadowWidth <= 0) return;
         int width = getWidth();
         int height = getHeight();
-        ShadowUtils.setShadow(canvas, paint, width, height, shadowWidth, startColor, endColor, radius);
+        ShadowUtils.setShadow(canvas, paint, width, height, shadowWidth, startColor, endColor, ltRadius, lbRadius, rtRadius, rbRadius);
     }
 
     public void setShadowWidth(int shadowWidth) {
@@ -61,7 +76,15 @@ public class ShadowRelativeLayout extends RelativeLayout {
     }
 
     public void setRadius(int radius) {
-        this.radius = radius;
+        ltRadius = lbRadius = rtRadius = rbRadius = radius;
+        postInvalidate();
+    }
+
+    public void setRadius(int ltRadius, int lbRadius, int rtRadius, int rbRadius) {
+        this.ltRadius = ltRadius;
+        this.lbRadius = lbRadius;
+        this.rtRadius = rtRadius;
+        this.rbRadius = rbRadius;
         postInvalidate();
     }
 }

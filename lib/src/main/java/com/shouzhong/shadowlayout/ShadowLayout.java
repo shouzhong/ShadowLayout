@@ -15,9 +15,12 @@ public class ShadowLayout extends FrameLayout {
 
     private Paint paint;
     private int shadowWidth;
-    private int radius;
     private int startColor;
     private int endColor;
+    private int ltRadius;
+    private int lbRadius;
+    private int rtRadius;
+    private int rbRadius;
 
     public ShadowLayout(Context context) {
         this(context, null);
@@ -34,7 +37,19 @@ public class ShadowLayout extends FrameLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ShadowLayout, defStyleAttr, 0);
         if (array == null || array.length() == 0) return;
         shadowWidth = array.getDimensionPixelSize(R.styleable.ShadowLayout_slWidth, shadowWidth);
-        radius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slRadius, radius);
+        ltRadius = lbRadius = rtRadius = rbRadius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slRadius, 0);
+        if (array.getDimensionPixelSize(R.styleable.ShadowLayout_slLeftTopRadius, -1) != -1) {
+            ltRadius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slLeftTopRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowLayout_slLeftBottomRadius, -1) != -1) {
+            lbRadius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slLeftBottomRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowLayout_slRightTopRadius, -1) != -1) {
+            rtRadius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slRightTopRadius, -1);
+        }
+        if (array.getDimensionPixelSize(R.styleable.ShadowLayout_slRightBottomRadius, -1) != -1) {
+            rbRadius = array.getDimensionPixelSize(R.styleable.ShadowLayout_slRightBottomRadius, -1);
+        }
         startColor = array.getColor(R.styleable.ShadowLayout_slStartColor, startColor);
         endColor = array.getColor(R.styleable.ShadowLayout_slEndColor, endColor);
         array.recycle();
@@ -46,7 +61,7 @@ public class ShadowLayout extends FrameLayout {
         if (shadowWidth <= 0) return;
         int width = getWidth();
         int height = getHeight();
-        ShadowUtils.setShadow(canvas, paint, width, height, shadowWidth, startColor, endColor, radius);
+        ShadowUtils.setShadow(canvas, paint, width, height, shadowWidth, startColor, endColor, ltRadius, lbRadius, rtRadius, rbRadius);
     }
 
     public void setShadowWidth(int shadowWidth) {
@@ -61,7 +76,15 @@ public class ShadowLayout extends FrameLayout {
     }
 
     public void setRadius(int radius) {
-        this.radius = radius;
+        ltRadius = lbRadius = rtRadius = rbRadius = radius;
+        postInvalidate();
+    }
+
+    public void setRadius(int ltRadius, int lbRadius, int rtRadius, int rbRadius) {
+        this.ltRadius = ltRadius;
+        this.lbRadius = lbRadius;
+        this.rtRadius = rtRadius;
+        this.rbRadius = rbRadius;
         postInvalidate();
     }
 }
