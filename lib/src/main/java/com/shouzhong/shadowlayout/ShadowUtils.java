@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.Shader;
+import android.view.View;
 
 /**
  * Created by Administrator on 2019/04/29.
