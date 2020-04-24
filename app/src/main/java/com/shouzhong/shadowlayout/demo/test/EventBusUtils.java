@@ -1,53 +1,30 @@
 package com.shouzhong.shadowlayout.demo.test;
 
-import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Process;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class EventBusUtils {
 
-    private static Application app;
-
     static EventBus get() {
         return EventBus.getDefault();
     }
 
-    private static void sendBroadcast(int pid, String action, String data) {
-        Intent intent = new Intent(app.getPackageName() + ".action.PROCESS_MESSAGE");
+    static void sendBroadcast(int pid, String action, String data) {
+        String permission = ProcessMessage.getApp().getPackageName() + ".permission.RECEIVER_PROCESS_MESSAGE";
+        Intent intent = new Intent(ProcessMessage.getApp().getPackageName() + ".action.PROCESS_MESSAGE");
         intent.putExtra("type", "eventbus");
         intent.putExtra("pid", pid);
         intent.putExtra("action", action);
         intent.putExtra("data", data);
-        getApp().sendBroadcast(intent);
+        ProcessMessage.getApp().sendBroadcast(intent, permission);
     }
 
-    public static Application getApp() {
-        if (app == null) {
-            try {
-                @SuppressLint("PrivateApi")
-                Class<?> activityThread = Class.forName("android.app.ActivityThread");
-                Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
-                Object app = activityThread.getMethod("getApplication").invoke(thread);
-                EventBusUtils.app = (Application) app;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return app;
-    }
-
-    public static void init(Application app) {
-        EventBusUtils.app = app;
+    static void init() {
         if (!Utils.isMainProcess()) {
             sendBroadcast(Process.myPid(), "init", null);
         }
-        String action = app.getPackageName() + ".action.PROCESS_MESSAGE";
-        IntentFilter filter = new IntentFilter(action);
-        app.registerReceiver(new Receiver(), filter);
     }
 
     public static void register(Object subscriber) {
@@ -99,6 +76,6 @@ public class EventBusUtils {
     }
 
     public static boolean hasSubscriberForEvent(Class<?> eventClass) {
-        return get().hasSubscriberForEvent(eventClass) || Bean.hasSubscriberForEvent(eventClass.getName());
+        return get().hasSubscriberForEvent(eventClass) || EventBusCache.hasSubscriberForEvent(eventClass.getName());
     }
 }

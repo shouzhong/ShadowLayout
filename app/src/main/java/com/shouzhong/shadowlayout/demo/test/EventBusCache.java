@@ -7,58 +7,50 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Bean {
+class EventBusCache {
     private static final int BRIDGE = 0x40;
     private static final int SYNTHETIC = 0x1000;
     private static final int MODIFIERS_IGNORE = Modifier.ABSTRACT | Modifier.STATIC | BRIDGE | SYNTHETIC;
 
-    static final Map<String, List<String>> typesBySubscriber = new HashMap<>();
-    static final Map<String, String> stickyEvents = new HashMap<>();
+    static final LinkedHashMap<String, List<String>> TYPE_BY_SUBSCRIBER = new LinkedHashMap<>();
+    static final LinkedHashMap<String, String> STICKY_EVENTS = new LinkedHashMap<>();
 
     static boolean hasSubscriberForEvent(String s) {
         if (TextUtils.isEmpty(s)) return false;
-        for (List<String> list : typesBySubscriber.values()) {
+        for (List<String> list : TYPE_BY_SUBSCRIBER.values()) {
             if (list == null) continue;
-            for (String type : list) {
-                if (TextUtils.equals(type, s)) return true;
-            }
+            if (list.contains(s)) return true;
         }
         return false;
-    }
-
-    static boolean isRegistered(String s) {
-        if (TextUtils.isEmpty(s)) return false;
-        return typesBySubscriber.containsKey(s);
     }
 
      static void register(String s) {
         if (TextUtils.isEmpty(s)) return;
         List<String> types = findMethods(s);
         if (types == null) return;
-        typesBySubscriber.put(s, types);
+         TYPE_BY_SUBSCRIBER.put(s, types);
     }
 
     static void unregister(String s) {
         if (TextUtils.isEmpty(s)) return;
-        typesBySubscriber.remove(s);
+        TYPE_BY_SUBSCRIBER.remove(s);
     }
 
     static void postSticky(String cls, String data) {
         if (TextUtils.isEmpty(cls)) return;
-        stickyEvents.put(cls, data);
+        STICKY_EVENTS.put(cls, data);
     }
 
     static void removeStickyEvent(String cls) {
         if (TextUtils.isEmpty(cls)) return;
-        stickyEvents.remove(cls);
+        STICKY_EVENTS.remove(cls);
     }
 
     static void removeAllStickyEvents() {
-        stickyEvents.clear();
+        STICKY_EVENTS.clear();
     }
 
     private static List<String> findMethods(String s) {
@@ -82,8 +74,8 @@ public class Bean {
                 if (list == null) list = new ArrayList<>();
                 list.add(parameterTypes[0].getName());
             }
-            return null;
-        } catch (Exception e) {}
+            return list;
+        } catch (Exception e) { }
         return null;
     }
 }

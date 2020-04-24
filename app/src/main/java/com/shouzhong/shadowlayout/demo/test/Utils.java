@@ -1,5 +1,6 @@
 package com.shouzhong.shadowlayout.demo.test;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -14,20 +15,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class Utils {
+class Utils {
 
-    private static Gson gson;
+    static Gson gson;
 
-    public static Gson getGson() {
+    static Gson getGson() {
         if (gson == null) gson = new Gson();
         return gson;
     }
 
-    public static boolean isMainProcess() {
-        return com.blankj.utilcode.util.Utils.getApp().getPackageName().equals(getCurrentProcessName());
+    static boolean isMainProcess() {
+        return ProcessMessage.getApp().getPackageName().equals(getCurrentProcessName());
     }
 
-    public static String getCurrentProcessName() {
+    static String getCurrentProcessName() {
         String name = getCurrentProcessNameByFile();
         if (!TextUtils.isEmpty(name)) return name;
         name = getCurrentProcessNameByAms();
@@ -51,7 +52,7 @@ public class Utils {
 
     private static String getCurrentProcessNameByAms() {
         try {
-            ActivityManager am = (ActivityManager) com.blankj.utilcode.util.Utils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager am = (ActivityManager) ProcessMessage.getApp().getSystemService(Context.ACTIVITY_SERVICE);
             if (am == null) return "";
             List<ActivityManager.RunningAppProcessInfo> info = am.getRunningAppProcesses();
             if (info == null || info.size() == 0) return "";
@@ -72,7 +73,7 @@ public class Utils {
     private static String getCurrentProcessNameByReflect() {
         String processName = "";
         try {
-            Application app = com.blankj.utilcode.util.Utils.getApp();
+            Application app = ProcessMessage.getApp();
             Field loadedApkField = app.getClass().getField("mLoadedApk");
             loadedApkField.setAccessible(true);
             Object loadedApk = loadedApkField.get(app);
@@ -89,7 +90,7 @@ public class Utils {
         return processName;
     }
 
-    public static Method getMethodByReflect(Class cls, String methodName, Class<?>... parameterTypes) {
+    static Method getMethodByReflect(Class cls, String methodName, Class<?>... parameterTypes) {
         try {
             return cls.getDeclaredMethod(methodName, parameterTypes);
         } catch (Exception e) {}
@@ -97,7 +98,7 @@ public class Utils {
     }
 
     static int hashCode(Object obj) {
-        int hashCode = 0;
+        int hashCode;
         try {
             Method method = Utils.getMethodByReflect(Object.class, "identityHashCode", Object.class);
             hashCode = (int) method.invoke(null, obj);
